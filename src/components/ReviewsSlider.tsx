@@ -6,33 +6,33 @@ import { Star } from "lucide-react";
 const reviews = [
   {
     id: 1,
-    text: "Finally, a natural deodorant that actually works. No more yellow stains on my white shirts!",
+    text: "Finally, a natural deodorant that actually works. No more yellow stains!",
     author: "Sarah M.",
-    verified: true
+    highlight: "WORKS"
   },
   {
     id: 2,
-    text: "The sandalwood scent is incredible—subtle but sophisticated. My partner loves it.",
+    text: "The sandalwood scent is incredible—subtle but sophisticated.",
     author: "James K.",
-    verified: true
+    highlight: "SUBTLE"
   },
   {
     id: 3,
-    text: "I've tried every natural deodorant on the market. This is the only one I'll repurchase.",
+    text: "I've tried every natural deodorant. This is the only one I'll repurchase.",
     author: "Emily R.",
-    verified: true
+    highlight: "ONLY ONE"
   },
   {
     id: 4,
-    text: "As someone with sensitive skin, this is a game-changer. No irritation whatsoever.",
+    text: "As someone with sensitive skin, this is a game-changer.",
     author: "Michael T.",
-    verified: true
+    highlight: "GAME-CHANGER"
   },
   {
     id: 5,
-    text: "The minimalist packaging matches my aesthetic perfectly. Great for travel too.",
+    text: "Minimalist packaging, maximum protection. Love it.",
     author: "Olivia P.",
-    verified: true
+    highlight: "LOVE IT"
   }
 ];
 
@@ -41,72 +41,101 @@ const ReviewsSlider = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="section-spacing bg-card overflow-hidden">
-      <div className="container-narrow mb-16">
+    <section ref={ref} className="relative section-spacing overflow-hidden">
+      {/* Large USP Text Background */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 0.03 } : {}}
+        transition={{ duration: 1 }}
+        className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none"
+      >
+        <span className="text-[20vw] font-black text-foreground whitespace-nowrap">
+          REAL RESULTS
+        </span>
+      </motion.div>
+
+      {/* Bleeding Black Shape - Top Right */}
+      <motion.div
+        initial={{ x: 200, opacity: 0 }}
+        animate={isInView ? { x: 0, opacity: 1 } : {}}
+        transition={{ duration: 1 }}
+        className="absolute -top-16 -right-16 w-[300px] h-[250px] md:w-[400px] md:h-[350px] shape-black z-0"
+      >
+        <div className="absolute inset-0 flex items-center justify-center p-8">
+          <span className="text-3xl md:text-5xl font-black text-primary rotate-12">
+            5★
+          </span>
+        </div>
+      </motion.div>
+
+      <div className="relative z-10 container-narrow">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center"
+          className="mb-16"
         >
-          <h2 className="text-sm font-semibold tracking-[0.25em] text-primary mb-4 uppercase">
+          <h2 className="text-sm font-bold tracking-[0.3em] text-primary mb-4 uppercase">
             Testimonials
           </h2>
-          <h3 className="text-3xl md:text-5xl font-bold text-foreground">
-            What Our Customers Say
+          <h3 className="text-4xl md:text-6xl lg:text-7xl font-black text-foreground">
+            What They Say
           </h3>
         </motion.div>
-      </div>
 
-      {/* Horizontal Scrolling Reviews */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="relative"
-      >
-        <div className="flex gap-6 overflow-x-auto pb-4 px-6 md:px-8 scrollbar-hide snap-x snap-mandatory">
+        {/* Asymmetric Review Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {reviews.map((review, index) => (
             <motion.div
               key={review.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-              className="flex-shrink-0 w-[340px] md:w-[400px] snap-start"
+              transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+              className={`
+                relative p-8 rounded-[2rem] border-2 border-foreground
+                ${index === 0 ? 'md:col-span-2 lg:col-span-1' : ''}
+                ${index === 2 ? 'bg-primary text-primary-foreground border-primary' : 'bg-background'}
+              `}
             >
-              <div className="bg-background border border-foreground/10 rounded-lg p-8 h-full">
-                {/* Stars */}
-                <div className="flex gap-1 mb-6">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                  ))}
+              {/* Highlight word */}
+              <span className={`
+                absolute -top-4 left-6 px-4 py-1 text-xs font-bold rounded-full
+                ${index === 2 ? 'bg-foreground text-background' : 'bg-primary text-primary-foreground'}
+              `}>
+                {review.highlight}
+              </span>
+
+              {/* Stars */}
+              <div className="flex gap-1 mb-6 mt-2">
+                {[...Array(5)].map((_, i) => (
+                  <Star 
+                    key={i} 
+                    className={`w-4 h-4 ${index === 2 ? 'fill-primary-foreground text-primary-foreground' : 'fill-primary text-primary'}`} 
+                  />
+                ))}
+              </div>
+
+              {/* Review Text */}
+              <p className={`text-xl font-medium leading-relaxed mb-6 ${index === 2 ? '' : 'text-foreground'}`}>
+                "{review.text}"
+              </p>
+
+              {/* Author */}
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full ${index === 2 ? 'bg-primary-foreground/20' : 'bg-secondary'} flex items-center justify-center font-bold`}>
+                  {review.author[0]}
                 </div>
-
-                {/* Review Text */}
-                <p className="text-foreground text-lg leading-relaxed mb-6">
-                  "{review.text}"
-                </p>
-
-                {/* Author */}
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold text-foreground">
-                    {review.author}
-                  </span>
-                  {review.verified && (
-                    <span className="text-xs text-muted-foreground px-2 py-1 bg-secondary rounded-full">
-                      Verified Buyer
-                    </span>
-                  )}
+                <div>
+                  <span className="font-bold">{review.author}</span>
+                  <p className={`text-xs ${index === 2 ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                    Verified Buyer
+                  </p>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
-
-        {/* Gradient Fades */}
-        <div className="absolute left-0 top-0 bottom-4 w-12 bg-gradient-to-r from-card to-transparent pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-card to-transparent pointer-events-none" />
-      </motion.div>
+      </div>
     </section>
   );
 };
