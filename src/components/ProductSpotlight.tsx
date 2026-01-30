@@ -16,7 +16,7 @@ const ProductSpotlight = () => {
         initial={{ x: 300, opacity: 0 }}
         animate={isInView ? { x: 0, opacity: 1 } : {}}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="absolute top-20 -right-20 w-[400px] h-[600px] md:w-[500px] md:h-[700px] bg-background rounded-[3rem] z-0 overflow-hidden"
+        className="absolute top-20 -right-20 w-[400px] h-[600px] md:w-[500px] md:h-[700px] bg-white/5 rounded-[3rem] z-0 overflow-hidden backdrop-blur-sm"
       >
         <img 
           src={productImage} 
