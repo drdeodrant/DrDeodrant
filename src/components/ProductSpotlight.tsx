@@ -35,6 +35,7 @@ const ProductSpotlight = () => {
 
       <div className="relative z-10 container-narrow">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
+          
           {/* Product Image - Left */}
           <motion.div
             initial={{ opacity: 0, x: -80 }}
@@ -42,15 +43,24 @@ const ProductSpotlight = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative">
-              {/* Blue background shape */}
-              <div className="absolute inset-0 shape-blue transform rotate-6 scale-110" />
+            <div className="relative flex justify-center items-center">
+              {/* Background Shape: Remains as a backdrop/frame */}
+              <div className="absolute inset-0 shape-blue transform rotate-6 scale-110 rounded-3xl" />
               
-              <img
-                src={productImage}
-                alt="Dr.Deodorant - Sandalwood & Bergamot"
-                className="relative z-10 w-full max-w-md mx-auto"
-              />
+              {/* Foreground Video: Replaces the Image */}
+              {/* We apply 'rotate-6' here to match the axis of the shape behind it */}
+              <div className="relative z-10 w-full max-w-md aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl transform rotate-6 bg-black">
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-fill"
+                >
+                  <source src="src/assets/Deodorant_Ad_Video_Generation.mp4" type="video/mp4" />
+                </video>
+              </div>
+              
             </div>
           </motion.div>
 
