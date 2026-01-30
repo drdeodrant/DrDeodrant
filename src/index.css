@@ -136,7 +136,7 @@
   }
 
   .usp-text {
-    @apply text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter leading-none;
+    @apply text-3xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-none;
   }
 }
 

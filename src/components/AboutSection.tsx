@@ -39,7 +39,7 @@ const AboutSection = () => {
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-8 leading-[0.95]">
               2000 Years<br />of Natural<br />Protection
             </h3>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+            <p className="text-lg text-foreground leading-relaxed mb-8">
               Potassium alum has been nature's deodorant for millennia. 
               This crystalline mineral creates an invisible barrier that 
               neutralizes odor-causing bacteria—without blocking pores.

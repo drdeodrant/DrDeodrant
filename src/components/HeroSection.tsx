@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import heroCloseup from "@/assets/hero-closeup.jpg";
+import heroCloseup from "@/assets/hero-closeup.png";
 
 const HeroSection = () => {
   return (
@@ -20,8 +20,8 @@ const HeroSection = () => {
         transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
         className="absolute -bottom-32 -left-32 w-[400px] h-[350px] md:w-[600px] md:h-[450px] shape-black z-10"
       >
-        <div className="absolute inset-0 flex items-center justify-center p-12">
-          <span className="usp-text text-primary-foreground rotate-[-8deg]">
+        <div className="absolute inset-0 flex items-center justify-end p-12">
+          <span className="usp-text text-primary-foreground rotate-[-6deg]">
             NO STAINS
           </span>
         </div>
@@ -70,14 +70,14 @@ const HeroSection = () => {
           >
             <Button 
               size="lg" 
-              className="px-10 py-7 text-lg font-bold rounded-full transition-all duration-300 hover:scale-105"
+              className="px-10 py-7 text-lg font-bold rounded-full transition-all duration-300 hover:scale-105 border-2 border-white"
             >
               Shop Now
             </Button>
             <Button 
               variant="outline"
               size="lg" 
-              className="px-10 py-7 text-lg font-bold rounded-full border-2 border-foreground transition-all duration-300 hover:scale-105 hover:bg-foreground hover:text-background"
+              className="px-10 py-7 text-lg font-bold rounded-full border-2 border-foreground transition-all duration-300 hover:scale-105 hover:bg-foreground hover:text-background hover:border-background"
             >
               Learn More
             </Button>
