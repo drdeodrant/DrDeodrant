@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  // Handle Scroll Effect
+  // Handle Scroll Effect for "Shrinking" or appearance changes
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -15,14 +16,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 1. Fixed Data Structure (matches logic below)
-  const navLinks = [
-    { name: "Shop", id: "product-spotlight" },
-    { name: "Story", route: "/about" }, 
-    { name: "FAQ", id: "faq" },
-  ];
-
-  // 2. The Robust Navigation Logic
   const handleNavigation = (link: { name: string; id?: string; route?: string }) => {
     setIsMobileOpen(false); // Always close mobile menu first
 
@@ -48,6 +41,21 @@ const Navbar = () => {
     }
   };
 
+  // Smooth Scroll Helper
+  const scrollToSection = (id: string) => {
+    setIsMobileOpen(false); // Close mobile menu if open
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const navLinks = [
+    { name: "Shop", id: "product-spotlight" },
+    { name: "Story", href: "/about" },
+    { name: "FAQ", id: "faq" },
+  ];
+
   return (
     <>
       {/* Floating Navbar Container */}
@@ -64,7 +72,7 @@ const Navbar = () => {
           {/* 1. Logo (Left) */}
           <div 
             className="text-xl md:text-2xl font-black tracking-tighter cursor-pointer select-none hover:text-primary transition-colors"
-            onClick={() => window.location.href = "/"}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             DR.DEO
           </div>
@@ -72,14 +80,27 @@ const Navbar = () => {
           {/* 2. Desktop Links (Center) */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => handleNavigation(link)}
-                className="relative text-sm font-bold uppercase tracking-wide hover:text-primary group transition-colors"
-              >
-                {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full" />
-              </button>
+              link.id ? (
+                // OPTION A: It's a Scroll Link (Button)
+                <button
+                  key={link.name}
+                  onClick={() => scrollToSection(link.id)}
+                  className="relative text-sm font-bold uppercase tracking-wide hover:text-primary group transition-colors"
+                >
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full" />
+                </button>
+              ) : (
+                // OPTION B: It's a Page Route (Anchor Tag)
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="relative text-sm font-bold uppercase tracking-wide hover:text-primary group transition-colors"
+                >
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full" />
+                </a>
+              )
             ))}
           </div>
 
@@ -90,6 +111,7 @@ const Navbar = () => {
               <div className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center border-2 border-black transition-all duration-200 group-hover:bg-primary group-hover:border-black group-hover:shadow-[2px_2px_0px_0px_#000] group-hover:-translate-y-0.5">
                 <ShoppingBag className="w-4 h-4" />
               </div>
+              {/* Optional Badge */}
               <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white border border-black">
                 2
               </span>
@@ -132,7 +154,7 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + index * 0.1 }}
-                  onClick={() => handleNavigation(link)}
+                  onClick={() => scrollToSection(link.id || "")}
                   className="text-6xl font-black text-white uppercase tracking-tighter hover:text-black hover:scale-105 transition-all stroke-text"
                 >
                   {link.name}
