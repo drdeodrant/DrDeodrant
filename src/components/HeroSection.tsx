@@ -18,7 +18,7 @@ const HeroSection = () => {
         initial={{ x: -200, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-        className="absolute -bottom-32 -left-32 w-[400px] h-[350px] md:w-[600px] md:h-[450px] shape-black z-10"
+        className="absolute -bottom-32 -left-32 w-[400px] h-[350px] md:w-[650px] md:h-[450px] shape-black z-10"
       >
         <div className="absolute inset-0 flex items-center justify-end p-12">
           <span className="usp-text text-primary-foreground rotate-[-6deg]">
@@ -56,9 +56,9 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="text-lg md:text-xl text-muted-foreground mb-10 max-w-md"
+            className="text-lg md:text-xl text-white mb-10 max-w-md"
           >
-            Pure alum mineral. Zero aluminum compounds. 
+            Pure Mineral. Zero Aluminum Chlorohydrate.
             Clean, natural protection that actually works.
           </motion.p>
 

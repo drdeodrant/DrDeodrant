@@ -56,7 +56,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section ref={ref} className="relative section-spacing overflow-hidden bg-background">
+    <section id="faq" ref={ref} className="relative section-spacing overflow-hidden bg-background">
       {/* Bleeding Blue Shape - Left */}
       <motion.div
         initial={{ x: -200, opacity: 0 }}

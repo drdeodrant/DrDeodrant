@@ -4,6 +4,7 @@ import { Sparkles, Award, Heart } from "lucide-react";
 import alumCrystal from "@/assets/alum-crystal.jpg";
 import founderImage from "@/assets/founder.jpeg";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 // Section A: The Hook
 const HookSection = () => {
@@ -349,6 +350,7 @@ const VisionarySection = () => {
 const About = () => {
   return (
     <main className="min-h-screen bg-background">
+      <Navbar />
       <HookSection />
       <OriginSection />
       <VisionarySection />

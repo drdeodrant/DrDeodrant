@@ -50,7 +50,7 @@ const ReviewsSlider = () => {
         className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none"
       >
         <span className="text-[20vw] font-black text-foreground whitespace-nowrap">
-          REAL RESULTS
+          RESULTS
         </span>
       </motion.div>
 

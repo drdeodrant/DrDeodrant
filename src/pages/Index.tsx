@@ -5,15 +5,17 @@ import FAQSection from "@/components/FAQSection";
 import ReviewsSlider from "@/components/ReviewsSlider";
 import TrustBadges from "@/components/TrustBadges";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-background">
+      <Navbar />
       <HeroSection />
       <AboutSection />
       <ProductSpotlight />
-      <FAQSection />
       <ReviewsSlider />
+      <FAQSection />
       <TrustBadges />
       <Footer />
     </main>

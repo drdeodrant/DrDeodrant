@@ -32,7 +32,7 @@ const ProductSpotlight = () => {
   };
 
   return (
-    <section ref={ref} className="relative section-spacing overflow-hidden bg-foreground">
+    <section id="product-spotlight" ref={ref} className="relative section-spacing overflow-hidden bg-foreground">
       {/* Bleeding White Shape - Right side with product close-up */}
       <motion.div
         initial={{ x: 300, opacity: 0 }}
@@ -97,27 +97,28 @@ const ProductSpotlight = () => {
             </p>
             
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-[0.95]">
-              Sandalwood<br />& Bergamot
+              {/* Sandalwood<br />& Bergamot */}
+              Natural
             </h2>
             
             <div className="flex items-baseline gap-4 mb-8">
-              <span className="text-5xl font-black text-primary">$28</span>
-              <span className="text-lg text-background/60">50ml / 1.7 fl oz</span>
+              <span className="text-5xl font-black text-primary">₹699</span>
+              <span className="text-lg text-background/60">70g</span>
             </div>
 
             <div className="mb-10">
               <p className="text-sm font-bold text-background/60 mb-3 uppercase tracking-wide">
-                Scent Profile
+                Mineral Profile
               </p>
               <p className="text-lg text-background/80 leading-relaxed">
-                Warm sandalwood base with bright citrus bergamot, 
-                finished with subtle white musk. Sophisticated & gender-neutral.
+                100% pure Potassium Aluminum Sulfate. <span className="font-black text-background">Completely unscented. </span> 
+                No artificial fragrances or masking agents—just an invisible, non-sticky mineral shield that neutralises bacteria at the source.
               </p>
             </div>
 
             {/* Benefits */}
             <div className="flex flex-wrap gap-3 mb-10">
-              {["Lasts 6+ Months", "Free Shipping $50+", "Lab Tested"].map((item) => (
+              {["Lasts 6+ Months", "Free Shipping", "Lab Tested"].map((item) => (
                 <span 
                   key={item}
                   className="px-5 py-2 bg-background/10 rounded-full text-sm font-medium"
@@ -128,44 +129,48 @@ const ProductSpotlight = () => {
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-wrap gap-4">
-              {/* Add to Cart Button with Counter */}
+            <div className="flex flex-wrap items-center gap-4">
+              {/* Logic: If cart is empty, show Big Add Button. If items exist, show Counter AND Buy Now */}
               {cartCount === 0 ? (
                 <Button 
-                  size="lg" 
                   onClick={handleAddToCart}
-                  className="px-12 py-7 text-lg font-bold rounded-full transition-all duration-300 hover:scale-105"
+                  className="h-14 px-10 text-xl font-black rounded-full bg-primary text-primary-foreground hover:scale-105 transition-all duration-300 shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px]"
                 >
-                  <ShoppingBag className="w-5 h-5 mr-3" />
-                  Add to Cart
+                  <ShoppingBag className="w-6 h-6 mr-3" />
+                  ADD TO CART
                 </Button>
               ) : (
-                <div className="flex items-center bg-primary rounded-full overflow-hidden border-2 border-primary">
-                  <button
-                    onClick={handleDecrement}
-                    className="w-14 h-14 flex items-center justify-center text-primary-foreground hover:bg-primary-hover transition-colors"
-                  >
-                    <Minus className="w-5 h-5" />
-                  </button>
-                  <div className="px-6 py-3 text-xl font-black text-primary-foreground min-w-[60px] text-center">
-                    {cartCount}
+                <>
+                  {/* 1. The Counter (Uniform Pill Shape) */}
+                  <div className="h-14 flex items-center bg-primary rounded-full border-2 border-primary shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                    <button
+                      onClick={handleDecrement}
+                      className="w-14 h-full flex items-center justify-center text-primary-foreground hover:bg-black/10 transition-colors rounded-l-full"
+                    >
+                      <Minus className="w-6 h-6" />
+                    </button>
+                    
+                    <div className="w-12 flex items-center justify-center text-xl font-black text-primary-foreground select-none">
+                      {cartCount}
+                    </div>
+                    
+                    <button
+                      onClick={handleIncrement}
+                      className="w-14 h-full flex items-center justify-center text-primary-foreground hover:bg-black/10 transition-colors rounded-r-full"
+                    >
+                      <Plus className="w-6 h-6" />
+                    </button>
                   </div>
-                  <button
-                    onClick={handleIncrement}
-                    className="w-14 h-14 flex items-center justify-center text-primary-foreground hover:bg-primary-hover transition-colors"
-                  >
-                    <Plus className="w-5 h-5" />
-                  </button>
-                </div>
-              )}
 
-              {/* Buy Now Button */}
-              <button
-                onClick={handleBuyNow}
-                className="px-10 py-4 bg-background text-foreground text-lg font-black rounded-full border-4 border-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
-              >
-                Buy Now
-              </button>
+                  {/* 2. Buy Now Button (Appears only when count > 0) */}
+                  <button
+                    onClick={handleBuyNow}
+                    className="h-14 px-10 bg-white text-black text-xl font-black rounded-full border-4 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_rgba(0,40,255,1)] hover:border-primary hover:text-primary hover:translate-y-[-2px] transition-all duration-200 animate-in fade-in slide-in-from-left-4"
+                  >
+                    BUY NOW
+                  </button>
+                </>
+              )}
             </div>
           </motion.div>
         </div>

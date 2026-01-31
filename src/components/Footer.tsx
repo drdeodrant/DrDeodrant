@@ -1,6 +1,15 @@
 import { motion } from "framer-motion";
 
 const Footer = () => {
+
+  const navLinks = [
+  { label: "Shop All", href: "#product-spotlight" }, // Correct: Points to the ID
+  { label: "Our Story", href: "/about" },
+  { label: "Scent Journal", href: "#" },
+  { label: "FAQ", href: "#faq" },                    // Correct: Points to the ID
+];
+
+
   return (
     <footer className="relative py-20 md:py-28 overflow-hidden">
       {/* Decorative shapes */}
@@ -29,13 +38,13 @@ const Footer = () => {
           <div className="md:col-span-3 md:col-start-7">
             <h4 className="font-bold text-foreground mb-6 text-lg">Explore</h4>
             <ul className="space-y-4">
-              {["Shop All", "Our Story", "Scent Journal", "FAQ"].map((item) => (
-                <li key={item}>
+              {navLinks.map((item) => (
+                <li key={item.label}>
                   <a 
-                    href="#" 
+                    href={item.href} 
                     className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
                   >
-                    {item}
+                    {item.label}
                   </a>
                 </li>
               ))}
