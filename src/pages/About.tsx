@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Sparkles, Award, Heart } from "lucide-react";
 import alumCrystal from "@/assets/alum-crystal.jpg";
+import founderImage from "@/assets/founder.jpeg";
 import Footer from "@/components/Footer";
 
 // Section A: The Hook
@@ -37,48 +38,60 @@ const HookSection = () => {
               className="lg:col-span-5 lg:col-start-3 pt-32 lg:pt-0"
             >
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-foreground leading-[0.9] mb-8 tracking-tighter">
-                WE HATE<br />
-                <span className="text-primary">STAINS.</span>
+                WE
+                <span className="text-primary"> HATE</span><br/>
+                STAINS.
               </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed mb-6">
-                Yellow marks on your favorite shirt? Unacceptable. 
+              {/* PART 1: The Hook - Uses your Electric Brand Blue (#0047FF)
+                  This makes the text feel like part of the artwork, not just a paragraph.
+              */}
+              <p className="text-xl md:text-2xl text-zinc-750 font-black leading-tight mb-6 tracking-tight">
+                Yellow marks on your favorite shirt? Unacceptable.
+                <br className="hidden md:block" />
                 Chemicals seeping into your skin? Never again.
               </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                We started Dr.Deodorant because the world deserved better. 
-                A deodorant that protects without compromising. Pure mineral science, 
-                zero nonsense.
+
+              {/* PART 2: The Story - Uses Pure Black
+                  Standard, high-contrast black for maximum readability.
+              */}
+              <p className="text-lg md:text-xl text-black font-bold leading-relaxed max-w-lg">
+                We started Dr.Deodorant because the world deserved better.
+                A deodorant that protects without compromising. 
+                <span className="bg-black text-white px-1">Pure mineral science, zero nonsense.</span>
               </p>
             </motion.div>
 
-            {/* Crystal Image - Floating over the divide */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="lg:col-span-4 lg:col-start-8 relative"
-            >
-              <div className="relative">
-                {/* Black accent shape */}
-                <div className="absolute -top-8 -right-8 w-full h-full shape-black z-0" />
-                
-                <img
-                  src={alumCrystal}
-                  alt="Pure alum crystal texture"
-                  className="relative z-10 w-full rounded-[2rem] shadow-[12px_12px_0px_rgba(0,0,0,1)]"
-                />
+            {/* DESIGN FIX 3: Image Proximity
+              Changed 'col-start-8' to 'col-start-9'.
+              This keeps the image close to the text but allows overlapping elements to breathe.
+          */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: 6 }}
+            animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+            className="lg:col-span-4 lg:col-start-9 relative mt-12 lg:mt-0"
+          >
+            <div className="relative group">
+              {/* Black accent shape - Offset for "Sticker" effect */}
+              <div className="absolute top-4 -right-4 w-full h-full bg-black rounded-[2.5rem] z-0 transition-transform group-hover:translate-x-2 group-hover:translate-y-2" />
+              
+              <img
+                src={alumCrystal}
+                alt="Pure alum crystal texture"
+                className="relative z-10 w-full rounded-[2.5rem] border-4 border-white shadow-2xl"
+              />
 
-                {/* Floating badge */}
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 1 }}
-                  className="absolute -left-12 bottom-8 bg-primary text-primary-foreground px-6 py-4 rounded-full z-20"
-                >
-                  <span className="font-bold text-lg">100% Natural</span>
-                </motion.div>
-              </div>
-            </motion.div>
+              {/* Floating badge - Adjusted position to overlap nicely */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, delay: 1 }}
+                className="absolute -left-12 bottom-12 bg-primary text-white px-8 py-4 rounded-full z-20 shadow-[4px_4px_0px_rgba(0,0,0,1)] border-2 border-black transform -rotate-3 hover:rotate-0 transition-transform"
+              >
+                <span className="font-black text-lg tracking-wide">100% NATURAL</span>
+              </motion.div>
+            </div>
+          </motion.div>
           </div>
         </div>
       </div>
@@ -221,7 +234,7 @@ const VisionarySection = () => {
         className="absolute inset-0 flex items-end justify-start pointer-events-none overflow-hidden"
       >
         <span className="text-[8rem] md:text-[14rem] lg:text-[20rem] font-black text-foreground/[0.04] leading-none whitespace-nowrap translate-x-[-5%] translate-y-[20%]">
-          ALEX
+          REMEE
         </span>
       </motion.div>
 
@@ -247,7 +260,7 @@ const VisionarySection = () => {
             </h2>
             <h3 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-[0.9] tracking-tighter mb-8">
               Meet<br />
-              <span className="text-primary">Alex Chen</span>
+              <span className="text-primary">REMEE</span>
             </h3>
             
             <p className="text-xl text-muted-foreground leading-relaxed mb-6">
@@ -268,7 +281,7 @@ const VisionarySection = () => {
               className="inline-block"
             >
               <p className="text-3xl md:text-4xl text-primary font-bold italic transform -rotate-3">
-                — Alex Chen
+                — Remee
               </p>
               <p className="text-sm text-muted-foreground mt-2">
                 Founder & Chief Scientist
@@ -276,45 +289,55 @@ const VisionarySection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Founder Image - Right, overlapping black shape */}
+          {/* Founder Image - Right Column */}
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, x: 100 }} // Changed to slide in from right for better energy
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, delay: 0.5 }}
-            className="lg:col-span-5 lg:col-start-8 relative"
+            className="lg:col-span-5 lg:col-start-8 relative perspective-1000"
           >
-            {/* Placeholder for founder image */}
-            <div className="relative">
-              <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-primary/40 rounded-[3rem] overflow-hidden">
-                {/* Stylized placeholder content */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-32 h-32 mx-auto rounded-full bg-primary/30 mb-4" />
-                    <p className="text-primary font-bold">Founder Photo</p>
-                  </div>
-                </div>
+            <div className="relative group">
+              
+              {/* DESIGN FIX: The "Shadow" Shape
+                  This sits behind the image to create a 3D collage effect. 
+                  It's offset slightly to the bottom-right. */}
+              <div className="absolute top-4 -right-4 w-full h-full bg-white rounded-[3rem] -z-10 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2" />
+
+              {/* The Main Image Container */}
+              <div className="aspect-[3/4] rounded-[3rem] overflow-hidden border-4 border-black bg-white relative">
+                <img 
+                  src={founderImage} 
+                  alt="Founder of Dr. Deodorant" 
+                  // Image Effect: Starts grayscale, becomes full color on hover
+                  className="w-full h-full object-cover transition-all duration-700 filter grayscale group-hover:grayscale-0 group-hover:scale-105" 
+                />
+                
+                {/* Optional: Subtle blue overlay that vanishes on hover (adds to the brand color) */}
+                <div className="absolute inset-0 bg-primary/10 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0" />
               </div>
 
-              {/* Floating stats */}
+              {/* Floating Card 1: Patents */}
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                initial={{ opacity: 0, x: -50, rotate: -5 }}
+                animate={isInView ? { opacity: 1, x: 0, rotate: -5 } : {}}
                 transition={{ duration: 0.6, delay: 1 }}
-                className="absolute -left-8 top-1/4 bg-background px-6 py-4 rounded-2xl shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-foreground"
+                className="absolute -left-8 top-1/4 bg-white px-6 py-4 rounded-2xl shadow-[8px_8px_0px_rgba(0,0,0,1)] border-4 border-black z-20 hover:scale-110 transition-transform"
               >
-                <p className="text-3xl font-black text-primary">10+</p>
-                <p className="text-sm font-medium text-foreground">Patents Filed</p>
+                <p className="text-4xl font-black text-primary leading-none">10+</p>
+                <p className="text-sm font-bold text-black uppercase tracking-wider mt-1">Patents Filed</p>
               </motion.div>
 
+              {/* Floating Card 2: Experience */}
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                initial={{ opacity: 0, x: 50, rotate: 5 }}
+                animate={isInView ? { opacity: 1, x: 0, rotate: 5 } : {}}
                 transition={{ duration: 0.6, delay: 1.2 }}
-                className="absolute -right-4 bottom-1/4 bg-primary text-primary-foreground px-6 py-4 rounded-2xl"
+                className="absolute -right-8 bottom-1/4 bg-primary text-white px-6 py-4 rounded-2xl shadow-[8px_8px_0px_rgba(255,255,255,1)] border-4 border-black z-20 hover:scale-110 transition-transform"
               >
-                <p className="text-3xl font-black">15Y</p>
-                <p className="text-sm font-medium">In Biochemistry</p>
+                <p className="text-4xl font-black leading-none">15Y</p>
+                <p className="text-sm font-bold text-white/90 uppercase tracking-wider mt-1">In Biochemistry</p>
               </motion.div>
+
             </div>
           </motion.div>
         </div>
