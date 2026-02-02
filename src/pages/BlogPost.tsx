@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowLeft, ArrowRight, Calendar, User, Twitter, Facebook, Linkedin, Link as LinkIcon } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -198,6 +198,9 @@ const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = slug && blogPostsData[slug] ? blogPostsData[slug] : defaultPost;
   
+  // State for the active TOC item
+  const [activeId, setActiveId] = useState("");
+
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -208,6 +211,27 @@ const BlogPost = () => {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
 
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+
+  // Effect to track scrolling and update activeId
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-100px 0px -60% 0px" }
+    );
+
+    post.tableOfContents.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [post.tableOfContents]);
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -318,28 +342,44 @@ const BlogPost = () => {
                   </div>
                 </div>
 
-                {/* Table of Contents */}
+                {/* Table of Contents - Dynamic & Animated */}
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-wide mb-4 text-muted-foreground">
                     Contents
                   </h4>
-                  <div className="relative pl-4 border-l-4 border-primary/30">
-                    <div className="absolute left-0 top-0 w-1 bg-primary h-1/3 -ml-[2px]" />
-                    <ul className="space-y-3">
-                      {post.tableOfContents.map((item, index) => (
-                        <li key={index}>
-                          <a
-                            href={`#${item.id}`}
-                            className={`text-sm ${
-                              index === 0
-                                ? "font-bold text-foreground"
-                                : "text-muted-foreground hover:text-foreground"
-                            } transition-colors`}
-                          >
-                            {item.title}
-                          </a>
-                        </li>
-                      ))}
+                  <div className="relative pl-4 border-l-4 border-black/5">
+                    <ul className="space-y-4">
+                      {post.tableOfContents.map((item) => {
+                        const isActive = activeId === item.id;
+                        return (
+                          <li key={item.id} className="relative">
+                            {/* Animated Active Indicator */}
+                            {isActive && (
+                              <motion.div
+                                layoutId="active-toc-indicator"
+                                className="absolute -left-[19px] top-0 bottom-0 w-1 bg-primary rounded-full"
+                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                              />
+                            )}
+
+                            <a
+                              href={`#${item.id}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                                setActiveId(item.id);
+                              }}
+                              className={`block text-sm transition-colors duration-200 ${
+                                isActive
+                                  ? "font-black text-primary translate-x-2"
+                                  : "text-muted-foreground hover:text-foreground"
+                              }`}
+                            >
+                              {item.title}
+                            </a>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 </div>
@@ -392,20 +432,18 @@ const BlogPost = () => {
                   }
 
                   if (block.type === "heading") {
-                    // FIX: Calculate the true index of this heading by counting 
-                    // how many headings appear before it in the content array.
+                    // Correct index calculation for ID matching
                     const headingIndex = post.content
                       .slice(0, index)
                       .filter((item) => item.type === "heading").length;
-                      
-                    // Safely get the ID from the TOC array using the correct index
+                    
                     const headingId = post.tableOfContents[headingIndex]?.id;
 
                     return (
                       <h2
                         key={index}
                         id={headingId}
-                        className="text-3xl md:text-4xl font-black tracking-tight mt-12 mb-6 text-foreground scroll-mt-32" // Added scroll-mt-32 for better spacing when clicking links
+                        className="text-3xl md:text-4xl font-black tracking-tight mt-12 mb-6 text-foreground scroll-mt-32"
                       >
                         {block.text}
                       </h2>
