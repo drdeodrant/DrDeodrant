@@ -20,7 +20,7 @@ const Navbar = () => {
   const navLinks = [
     { name: "Shop", id: "product-spotlight" },
     { name: "Story", href: "/about" }, // standardized to 'href'
-    { name: "FAQ", id: "faq" },
+    { name: "Journal", href: "/blog" },
   ];
 
   // Robust Navigation Handler

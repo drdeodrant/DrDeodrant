@@ -84,7 +84,7 @@ const Blog = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
+    <div className="min-h-screen bg-background overflow-hidden ">
       <Navbar />
 
       {/* Hero Header Section */}
@@ -94,7 +94,7 @@ const Blog = () => {
           initial={{ x: 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="absolute -top-20 -right-32 w-[400px] h-[600px] md:w-[600px] md:h-[800px] bg-primary rounded-[3rem] z-0"
+          className="absolute -top-20 -right-32 w-[400px] h-[600px] md:w-[600px] md:h-[800px] bg-primary rounded-[3rem] z-0 border-b-4 border-l-4 border-black"
         />
 
         <div className="container-narrow relative z-10">
@@ -258,56 +258,91 @@ const Blog = () => {
         />
 
         <div className="container-narrow relative z-10">
-  <motion.div
-    initial={{ opacity: 0, y: 50, rotate: 0 }}
-    whileInView={{ opacity: 1, y: 0, rotate: -1 }} // DESIGN MOVE: Funky tilt
-    viewport={{ once: true }}
-    transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
-    className="relative bg-black text-white rounded-[3rem] p-8 md:p-16 shadow-[16px_16px_0px_#0047FF] border-4 border-black overflow-hidden"
-  >
-    {/* DESIGN MOVE: Blue Corner Accent */}
-    <div className="absolute top-0 right-0 w-24 h-24 md:w-40 md:h-40 bg-[#0047FF] rounded-bl-[5rem] -mr-1 -mt-1 pointer-events-none" />
+          <div className="relative max-w-5xl mx-auto group">
+            
+            {/* LAYER 1 (The Base): Cobalt Blue - The Hard Shadow */}
+            <div className="absolute inset-0 bg-[#0047FF] rounded-[3rem] border-4 border-black translate-x-3 translate-y-3 md:translate-x-6 md:translate-y-6" />
 
-    <div className="relative z-10 max-w-2xl">
-      <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.9] mb-6">
-        DON'T <span className="text-[#0047FF] bg-white px-2 rounded-lg transform -skew-x-6 inline-block">SWEAT</span> IT.
-        <br />
-        JOIN THE LIST.
-      </h2>
-      <p className="text-lg md:text-xl text-zinc-400 mb-10 max-w-lg leading-relaxed">
-        Get exclusive drops, science breakdowns, and fresh content delivered straight to your inbox. No spam, just fresh.
-      </p>
+            {/* LAYER 2 (The Shell): Black - Main Container */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative bg-black text-white rounded-[3rem] border-4 border-black overflow-hidden flex flex-col md:flex-row"
+            >
+              
+              {/* LEFT SIDE: The Hook */}
+              <div className="flex-1 p-10 md:p-16 relative z-10 flex flex-col justify-center">
+                {/* Decorative Grid Pattern behind text */}
+                <div className="absolute inset-0 opacity-20 pointer-events-none" 
+                     style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '40px 40px' }} 
+                />
+                
+                <div className="relative">
+                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/30 bg-white/10 backdrop-blur-md mb-6">
+                      <div className="w-2 h-2 rounded-full bg-[#0047FF] animate-pulse" />
+                      <span className="text-xs font-bold uppercase tracking-widest text-white">Newsletter</span>
+                   </div>
+                   
+                   <h2 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.9] mb-6">
+                    DON'T SWEAT<br/>
+                    THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0047FF] to-white">SMALL STUFF.</span>
+                  </h2>
+                  <p className="text-lg text-zinc-400 font-medium max-w-md">
+                    Get the science of freshness delivered. No spam, just pure deodorant data.
+                  </p>
+                </div>
+              </div>
 
-      {subscribed ? (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-[#0047FF] text-white p-6 rounded-2xl inline-flex items-center gap-3 border-4 border-black shadow-[4px_4px_0px_rgba(255,255,255,0.2)]"
-        >
-          <span className="text-2xl">🎉</span>
-          <span className="text-xl font-black uppercase tracking-wide">You're on the list. Stay fresh.</span>
-        </motion.div>
-      ) : (
-        <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4">
-          <input
-            type="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="flex-1 px-6 py-5 text-lg bg-white text-black font-bold placeholder:text-zinc-400 rounded-2xl border-4 border-transparent focus:outline-none focus:border-[#0047FF] transition-all"
-          />
-          <button
-            type="submit"
-            className="px-8 py-5 bg-white text-black font-black text-xl uppercase tracking-wider rounded-2xl border-4 border-white hover:bg-[#0047FF] hover:text-white hover:border-[#0047FF] transition-all duration-300 shadow-[4px_4px_0px_rgba(0,0,0,0.5)] hover:shadow-[6px_6px_0px_rgba(0,0,0,0.5)] active:translate-y-1 active:shadow-none"
-          >
-            Subscribe
-          </button>
-        </form>
-      )}
-    </div>
-  </motion.div>
-</div>
+              {/* RIGHT SIDE (The Core): White - The Input Zone */}
+              <div className="w-full md:w-[450px] bg-white p-10 md:p-12 flex flex-col justify-center border-t-4 md:border-t-0 md:border-l-4 border-black relative">
+                 {/* Decorative "Notch" or Label */}
+                 <div className="absolute top-0 right-0 bg-black text-white px-4 py-2 rounded-bl-2xl font-black text-xs uppercase tracking-widest border-b-4 border-l-4 border-black">
+                    Join the Club
+                 </div>
+
+                 {subscribed ? (
+                    <motion.div
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      className="bg-[#0047FF] text-white p-8 rounded-3xl border-4 border-black shadow-[8px_8px_0px_#000] text-center"
+                    >
+                      <span className="text-4xl block mb-2">🎉</span>
+                      <h3 className="text-2xl font-black uppercase">You're In!</h3>
+                      <p className="font-bold opacity-80">Stay fresh.</p>
+                    </motion.div>
+                 ) : (
+                    <form onSubmit={handleSubscribe} className="flex flex-col gap-4">
+                      <div className="space-y-2">
+                        <label className="text-black font-black text-sm uppercase tracking-wider ml-1">Your Email</label>
+                        <input
+                          type="email"
+                          placeholder="name@example.com"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                          className="w-full px-6 py-5 text-lg bg-zinc-100 text-black font-bold placeholder:text-zinc-400 rounded-2xl border-4 border-transparent focus:bg-white focus:border-[#0047FF] focus:outline-none transition-all shadow-inner"
+                        />
+                      </div>
+                      
+                      <button
+                        type="submit"
+                        className="w-full py-5 bg-black text-white font-black text-xl uppercase tracking-wider rounded-2xl border-4 border-black hover:bg-[#0047FF] hover:border-[#0047FF] transition-all duration-300 shadow-[8px_8px_0px_rgba(0,0,0,0.2)] hover:shadow-none hover:translate-y-1 group"
+                      >
+                        Subscribe
+                      </button>
+                      
+                      <p className="text-xs text-zinc-400 text-center font-medium mt-2">
+                        Unsubscribe at any time. Stay cool.
+                      </p>
+                    </form>
+                 )}
+              </div>
+
+            </motion.div>
+          </div>
+        </div>
       </section>
 
       <Footer />

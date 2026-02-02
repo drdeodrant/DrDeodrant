@@ -58,30 +58,65 @@ const ProductSpotlight = () => {
       <div className="relative z-10 container-narrow">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
-          {/* Product Image - Left */}
+          {/* Product Image/Video - Left (The Floating Stage) */}
           <motion.div
-            initial={{ opacity: 0, x: -80 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, x: -80, rotate: -5 }}
+            animate={isInView ? { opacity: 1, x: 0, rotate: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            className="relative flex justify-center items-center py-10"
           >
-            <div className="relative flex justify-center items-center">
-              {/* Background Shape: Remains as a backdrop/frame */}
-              <div className="absolute inset-0 shape-blue transform rotate-6 scale-110 rounded-3xl" />
+            {/* LAYER 0: THE BIG BLUE BLOCK (The Atmosphere) */}
+            {/* This mimics your previous design but makes it a massive, intentional backdrop */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] z-0 pointer-events-none">
+               <div className="w-full h-full bg-[#0047FF] rounded-[4rem] transform rotate-6 opacity-20 blur-3xl" /> {/* Glow */}
+               <div className="absolute inset-4 bg-[#0047FF] rounded-[3rem] transform -rotate-3 border-4 border-black/10" /> {/* Solid Block */}
+            </div>
+
+            {/* CONTAINER: The Kinetic Stack */}
+            <div className="relative w-full max-w-md aspect-[4/5] group cursor-pointer z-10">
               
-              {/* Foreground Video: Replaces the Image */}
-              <div className="relative z-10 w-full max-w-md aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl transform rotate-6 bg-black">
+              {/* LAYER 1: The Base (Pitch Black) */}
+              {/* Anchors the stack */}
+              <div className="absolute inset-0 bg-black rounded-[2.5rem] transform -rotate-6 translate-y-6 translate-x-[-12px] border-4 border-black transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:translate-x-[-16px]" />
+
+              {/* LAYER 2: The Separator (Clean White) */}
+              {/* CHANGED TO WHITE to pop against the Blue Background */}
+              <div className="absolute inset-0 bg-white rounded-[2.5rem] transform -rotate-3 translate-y-3 translate-x-[-6px] border-4 border-black transition-transform duration-500 group-hover:rotate-[-4deg] group-hover:translate-x-[-8px]" />
+
+              {/* LAYER 3: The Content (Video) */}
+              <div className="relative h-full w-full bg-black rounded-[2.5rem] border-4 border-black overflow-hidden shadow-2xl transform rotate-2 transition-all duration-500 ease-out group-hover:rotate-0 group-hover:scale-[1.02] group-hover:shadow-[12px_12px_0px_rgba(0,0,0,0.5)]">
+                
+                {/* The Video */}
                 <video
                   autoPlay
                   loop
                   muted
                   playsInline
-                  className="w-full h-full object-fill"
+                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
                 >
                   <source src="src/assets/Deodorant_Ad_Video_Generation.mp4" type="video/mp4" />
                 </video>
+
+                {/* UI Overlay: "Sound On" Badge */}
+                <div className="absolute top-6 right-6 z-20">
+                   <div className="bg-black/20 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full flex items-center gap-2 shadow-lg">
+                      <div className="flex gap-[2px] items-end h-3">
+                        <span className="w-1 bg-white h-2 animate-[bounce_1s_infinite]" />
+                        <span className="w-1 bg-white h-3 animate-[bounce_1.2s_infinite]" />
+                        <span className="w-1 bg-white h-1 animate-[bounce_0.8s_infinite]" />
+                      </div>
+                      <span className="text-[10px] font-black uppercase tracking-widest text-white">Live</span>
+                   </div>
+                </div>
+
+                {/* UI Overlay: "Fresh" Sticker */}
+                <div className="absolute bottom-6 left-6 z-20">
+                   <div className="bg-[#0047FF] text-white px-4 py-2 text-xs font-black uppercase tracking-widest rounded-lg border-2 border-black shadow-[4px_4px_0px_#000] transform -rotate-2 group-hover:rotate-0 transition-transform">
+                      100% Natural
+                   </div>
+                </div>
+
               </div>
-              
             </div>
           </motion.div>
 
