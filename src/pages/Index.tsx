@@ -6,6 +6,7 @@ import ReviewsSlider from "@/components/ReviewsSlider";
 import TrustBadges from "@/components/TrustBadges";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import VideoTestimonials from "@/components/VideoTestimonals";
 
 const Index = () => {
   return (
@@ -15,6 +16,7 @@ const Index = () => {
       <AboutSection />
       <ProductSpotlight />
       <ReviewsSlider />
+      <VideoTestimonials />
       <FAQSection />
       <TrustBadges />
       <Footer />

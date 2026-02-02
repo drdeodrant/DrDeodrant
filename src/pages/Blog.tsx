@@ -181,12 +181,12 @@ const Blog = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-black tracking-tighter mb-16"
+            className="text-4xl md:text-6xl tracking-tighter mb-16 text-primary"
           >
-            LATEST <span className="text-primary">DROPS</span>
+            LATEST <span className="text-black">DROPS</span>
           </motion.h2>
 
-          {/* Masonry-Style Grid */}
+          {/* Masonry-Style Grid - FIXED */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {regularPosts.map((post, index) => (
               <motion.article
@@ -195,7 +195,8 @@ const Blog = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`group ${index === 0 ? "lg:col-span-2 lg:row-span-2" : ""}`}
+                // FIX: Changed to 'md:col-span-2'. Removed 'row-span-2' to fix the empty gap.
+                className={`group ${index === 0 ? "md:col-span-2" : "col-span-1"}`}
               >
                 <Link to={`/blog/${post.slug}`}>
                   <div
@@ -205,8 +206,9 @@ const Blog = () => {
                       <img
                         src={post.image}
                         alt={post.title}
+                        // STYLE UPDATE: Made the main image taller (h-96) for a cinematic look
                         className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${
-                          index === 0 ? "h-64 md:h-80" : "h-48"
+                          index === 0 ? "h-64 md:h-96" : "h-64"
                         }`}
                       />
                       <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300" />
@@ -217,7 +219,7 @@ const Blog = () => {
                       </span>
                       <h3
                         className={`font-black tracking-tight leading-tight mb-3 ${
-                          index === 0 ? "text-2xl md:text-3xl" : "text-lg md:text-xl"
+                          index === 0 ? "text-2xl md:text-4xl" : "text-lg md:text-xl"
                         }`}
                       >
                         {post.title}
@@ -256,51 +258,56 @@ const Blog = () => {
         />
 
         <div className="container-narrow relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-foreground text-background rounded-[3rem] p-8 md:p-16 shadow-[12px_12px_0px_#0047FF]"
-          >
-            <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.9] mb-6">
-                DON'T <span className="text-primary">SWEAT</span> IT.
-                <br />
-                JOIN THE LIST.
-              </h2>
-              <p className="text-lg md:text-xl text-muted mb-8">
-                Get exclusive drops, science breakdowns, and fresh content delivered straight to your inbox.
-              </p>
+  <motion.div
+    initial={{ opacity: 0, y: 50, rotate: 0 }}
+    whileInView={{ opacity: 1, y: 0, rotate: -1 }} // DESIGN MOVE: Funky tilt
+    viewport={{ once: true }}
+    transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
+    className="relative bg-black text-white rounded-[3rem] p-8 md:p-16 shadow-[16px_16px_0px_#0047FF] border-4 border-black overflow-hidden"
+  >
+    {/* DESIGN MOVE: Blue Corner Accent */}
+    <div className="absolute top-0 right-0 w-24 h-24 md:w-40 md:h-40 bg-[#0047FF] rounded-bl-[5rem] -mr-1 -mt-1 pointer-events-none" />
 
-              {subscribed ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-primary text-primary-foreground p-6 rounded-2xl inline-block"
-                >
-                  <span className="text-xl font-bold">🎉 You're in! Welcome to the fresh side.</span>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4">
-                  <input
-                    type="email"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="flex-1 px-6 py-4 text-lg bg-background text-foreground border-4 border-background rounded-xl focus:outline-none focus:border-primary transition-colors"
-                  />
-                  <button
-                    type="submit"
-                    className="px-10 py-4 bg-primary text-primary-foreground font-black text-lg uppercase tracking-wide rounded-xl border-4 border-primary hover:bg-background hover:text-foreground hover:border-background transition-all duration-300 shadow-[4px_4px_0px_#fff] hover:shadow-[6px_6px_0px_#fff]"
-                  >
-                    SUBSCRIBE
-                  </button>
-                </form>
-              )}
-            </div>
-          </motion.div>
-        </div>
+    <div className="relative z-10 max-w-2xl">
+      <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.9] mb-6">
+        DON'T <span className="text-[#0047FF] bg-white px-2 rounded-lg transform -skew-x-6 inline-block">SWEAT</span> IT.
+        <br />
+        JOIN THE LIST.
+      </h2>
+      <p className="text-lg md:text-xl text-zinc-400 mb-10 max-w-lg leading-relaxed">
+        Get exclusive drops, science breakdowns, and fresh content delivered straight to your inbox. No spam, just fresh.
+      </p>
+
+      {subscribed ? (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-[#0047FF] text-white p-6 rounded-2xl inline-flex items-center gap-3 border-4 border-black shadow-[4px_4px_0px_rgba(255,255,255,0.2)]"
+        >
+          <span className="text-2xl">🎉</span>
+          <span className="text-xl font-black uppercase tracking-wide">You're on the list. Stay fresh.</span>
+        </motion.div>
+      ) : (
+        <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4">
+          <input
+            type="email"
+            placeholder="your@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="flex-1 px-6 py-5 text-lg bg-white text-black font-bold placeholder:text-zinc-400 rounded-2xl border-4 border-transparent focus:outline-none focus:border-[#0047FF] transition-all"
+          />
+          <button
+            type="submit"
+            className="px-8 py-5 bg-white text-black font-black text-xl uppercase tracking-wider rounded-2xl border-4 border-white hover:bg-[#0047FF] hover:text-white hover:border-[#0047FF] transition-all duration-300 shadow-[4px_4px_0px_rgba(0,0,0,0.5)] hover:shadow-[6px_6px_0px_rgba(0,0,0,0.5)] active:translate-y-1 active:shadow-none"
+          >
+            Subscribe
+          </button>
+        </form>
+      )}
+    </div>
+  </motion.div>
+</div>
       </section>
 
       <Footer />

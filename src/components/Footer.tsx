@@ -5,7 +5,7 @@ const Footer = () => {
   const navLinks = [
   { label: "Shop All", href: "#product-spotlight" }, // Correct: Points to the ID
   { label: "Our Story", href: "/about" },
-  { label: "Scent Journal", href: "#" },
+  { label: "Scent Journal", href: "/blog" },
   { label: "FAQ", href: "#faq" },                    // Correct: Points to the ID
 ];
 

@@ -230,7 +230,7 @@ const BlogPost = () => {
         </motion.div>
 
         {/* Title Overlapping */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 transform translate-y-1/3">
+        <div className="absolute bottom-0 left-0 right-0 z-10 transform ">
           <div className="container-narrow">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -392,11 +392,20 @@ const BlogPost = () => {
                   }
 
                   if (block.type === "heading") {
+                    // FIX: Calculate the true index of this heading by counting 
+                    // how many headings appear before it in the content array.
+                    const headingIndex = post.content
+                      .slice(0, index)
+                      .filter((item) => item.type === "heading").length;
+                      
+                    // Safely get the ID from the TOC array using the correct index
+                    const headingId = post.tableOfContents[headingIndex]?.id;
+
                     return (
                       <h2
                         key={index}
-                        id={post.tableOfContents[Math.floor(index / 2)]?.id}
-                        className="text-3xl md:text-4xl font-black tracking-tight mt-12 mb-6 text-foreground"
+                        id={headingId}
+                        className="text-3xl md:text-4xl font-black tracking-tight mt-12 mb-6 text-foreground scroll-mt-32" // Added scroll-mt-32 for better spacing when clicking links
                       >
                         {block.text}
                       </h2>
