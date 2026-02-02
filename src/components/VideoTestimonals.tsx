@@ -216,7 +216,8 @@ const VideoTestimonials = () => {
         {/* 4. Attach ref to the container */}
         <div 
           ref={scrollContainerRef}
-          className="flex overflow-x-auto pb-20 px-6 pt-12 md:px-20 gap-8 snap-x snap-mandatory scrollbar-hide"
+          // UPDATED CLASSNAME: Added standard CSS hide properties via arbitrary values
+          className="flex overflow-x-auto pb-20 px-6 pt-12 md:px-20 gap-8 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {testimonials.map((t, i) => (
             <div key={t.id} className="snap-center">

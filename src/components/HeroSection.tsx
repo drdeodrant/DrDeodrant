@@ -71,6 +71,7 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               className="px-10 py-7 text-lg font-bold rounded-full transition-all duration-300 hover:scale-105 border-2 border-white"
+              onClick={() => { window.location.href = "#product-spotlight"; }}
             >
               Shop Now
             </Button>
@@ -78,6 +79,7 @@ const HeroSection = () => {
               variant="outline"
               size="lg" 
               className="px-10 py-7 text-lg font-bold rounded-full border-2 border-foreground transition-all duration-300 hover:scale-105 hover:bg-foreground hover:text-background hover:border-background"
+              onClick={() => { window.location.href = "/about"; }}
             >
               Learn More
             </Button>
