@@ -40,7 +40,7 @@ const HeroSection = () => {
   const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-background flex flex-col justify-center">
+    <section className="relative overflow-hidden bg-background flex flex-col justify-center min-h-screen lg:min-h-screen py-8 lg:py-0">
       
       {/* 1. TEXTURE LAYER: Grid & Grain */}
       <div className="absolute inset-0 z-0 opacity-[0.4]" 
@@ -61,27 +61,27 @@ const HeroSection = () => {
         className="absolute top-0 right-0 w-[40%] h-[70%] bg-[#0047FF] rounded-bl-[120px] z-0 hidden lg:block shadow-[inset_0px_0px_100px_rgba(0,0,0,0.1)]"
       />
 
-      {/* Bleeding Black Shape - Bottom Left */}
+      {/* Bleeding Black Shape - Bottom Left - Lower z-index on mobile */}
       <motion.div
         initial={{ y: "100%" }}
         animate={{ y: "0%" }}
         transition={{ duration: 1, delay: 0.2, ease: "circOut" }}
-        className="absolute bottom-0 left-0 w-[90%] md:w-[45%] h-[35%] bg-black rounded-tr-[100px] z-10"
+        className="absolute bottom-0 left-0 w-[90%] md:w-[45%] h-[25%] md:h-[35%] bg-black rounded-tr-[60px] md:rounded-tr-[100px] z-0 lg:z-10"
       >
         {/* Subtle texture inside the black shape */}
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#333 1px, transparent 1px)', backgroundSize: '10px 10px' }} />
       </motion.div>
 
       {/* Main Content Grid */}
-      <div className="relative z-20 container mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-12 items-center pt-20 lg:pt-0">
+      <div className="relative z-20 container mx-auto px-6 md:px-12 flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center pt-24 lg:pt-0">
         
         {/* LEFT COLUMN */}
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start w-full">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex items-center gap-2 mb-6 mt-20"
+            className="flex items-center gap-2 mb-4 md:mb-6"
           >
             <span className="flex h-2 w-2 rounded-full bg-[#0047FF] animate-pulse" />
             <h2 className="text-sm md:text-base font-bold tracking-[0.3em] uppercase">
@@ -93,7 +93,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-6xl md:text-8xl lg:text-9xl font-black text-black leading-[0.85] mb-8 tracking-tighter"
+            className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-black leading-[0.85] mb-6 md:mb-8 tracking-tighter"
           >
             NATURE'S <br />
             {/* The "Hollow" Effect for depth */}
@@ -113,7 +113,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="text-lg md:text-xl font-medium text-white mb-5 max-w-md border-l-4 border-[#0047FF] pl-6"
+            className="text-base md:text-xl font-medium text-foreground/80 mb-8 md:mb-5 max-w-md border-l-4 border-[#0047FF] pl-4 md:pl-6"
           >
             Pure Mineral. Zero Aluminum Chlorohydrate. Clean, natural protection that actually
 works—enriched with Vitamins C & E <br/>
@@ -168,15 +168,15 @@ works—enriched with Vitamins C & E <br/>
         </div>
 
         {/* RIGHT COLUMN: The Kinetic Product Display */}
-        <div className="relative flex justify-center lg:justify-end mt-12 lg:mt-0 perspective-1000">
+        <div className="relative flex justify-center lg:justify-end mt-8 md:mt-12 lg:mt-0 perspective-1000 w-full pb-16 lg:pb-0">
           
           {/* Parallax Container */}
-          <motion.div style={{ y: y2 }} className="relative w-full max-w-xl">
+          <motion.div style={{ y: y2 }} className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-xl">
             
-            {/* 3. DEPTH LAYER: Floating Shards (The "Mineral" Story) */}
-            <FloatingShard delay={0} className="w-16 h-16 top-0 right-10" />
-            <FloatingShard delay={1.5} className="w-12 h-12 bottom-20 -left-4" />
-            <FloatingShard delay={0.8} className="w-8 h-8 top-1/2 right-0 bg-[#0047FF]/30 border-[#0047FF]" />
+            {/* 3. DEPTH LAYER: Floating Shards (The "Mineral" Story) - Hidden on mobile */}
+            <FloatingShard delay={0} className="w-12 md:w-16 h-12 md:h-16 top-0 right-4 md:right-10 hidden sm:block" />
+            <FloatingShard delay={1.5} className="w-10 md:w-12 h-10 md:h-12 bottom-20 -left-2 md:-left-4 hidden sm:block" />
+            <FloatingShard delay={0.8} className="w-6 md:w-8 h-6 md:h-8 top-1/2 right-0 bg-[#0047FF]/30 border-[#0047FF] hidden sm:block" />
 
             {/* The Product Card */}
             <div className="relative z-10">
@@ -195,38 +195,38 @@ works—enriched with Vitamins C & E <br/>
                </div>
             </div>
 
-            {/* THE HYPE STICKER (Your Request) - Now with entry animation */}
+            {/* THE HYPE STICKER - Scaled down on mobile */}
             <motion.div
               initial={{ scale: 0, rotate: -45 }}
               animate={{ scale: 1, rotate: -12 }}
               whileHover={{ scale: 1.1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 15, delay: 1 }}
-              className="absolute -top-8 -left-8 z-30 cursor-pointer"
+              className="absolute -top-4 -left-2 sm:-top-8 sm:-left-8 z-30 cursor-pointer scale-[0.65] sm:scale-75 md:scale-100 origin-top-left"
             >
-               <div className="relative bg-white border-4 border-black p-5 shadow-[8px_8px_0px_#0047FF]">
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 bg-black/10 rotate-1 backdrop-blur-sm" />
-                  <div className="flex items-center gap-3">
-                    <Sparkles className="w-8 h-8 text-[#0047FF] fill-[#0047FF] animate-pulse" />
+               <div className="relative bg-white border-4 border-black p-3 sm:p-5 shadow-[6px_6px_0px_#0047FF] sm:shadow-[8px_8px_0px_#0047FF]">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 sm:w-16 h-4 sm:h-5 bg-black/10 rotate-1 backdrop-blur-sm" />
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <Sparkles className="w-6 sm:w-8 h-6 sm:h-8 text-[#0047FF] fill-[#0047FF] animate-pulse" />
                     <div className="flex flex-col">
-                        <span className="text-4xl font-black leading-none text-black italic tracking-tighter">
+                        <span className="text-2xl sm:text-4xl font-black leading-none text-black italic tracking-tighter">
                             NO STAINS
                         </span>
                         <div className="flex justify-between items-center mt-1">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-[#0047FF]">
+                          <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-[#0047FF]">
                               Guaranteed
                           </span>
-                          <Star className="w-3 h-3 fill-yellow-400 text-black" />
+                          <Star className="w-2 sm:w-3 h-2 sm:h-3 fill-yellow-400 text-black" />
                         </div>
                     </div>
                   </div>
                </div>
             </motion.div>
 
-            {/* The Bottom Badge */}
-            <motion.div style={{ y: y1 }} className="absolute -bottom-10 -right-4 z-20">
-               <div className="bg-[#0047FF] text-white border-4 border-black px-8 py-4 rounded-full shadow-[8px_8px_0px_rgba(0,0,0,1)] flex items-center gap-2">
-                 <span className="font-black text-xl">100%</span>
-                 <span className="text-sm font-bold uppercase tracking-wide opacity-90">Natural Mineral</span>
+            {/* The Bottom Badge - Repositioned and scaled on mobile */}
+            <motion.div style={{ y: y1 }} className="absolute -bottom-6 sm:-bottom-10 right-0 sm:-right-4 z-20">
+               <div className="bg-[#0047FF] text-white border-2 sm:border-4 border-black px-4 sm:px-8 py-2 sm:py-4 rounded-full shadow-[4px_4px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_rgba(0,0,0,1)] flex items-center gap-1 sm:gap-2">
+                 <span className="font-black text-sm sm:text-xl">100%</span>
+                 <span className="text-xs sm:text-sm font-bold uppercase tracking-wide opacity-90">Natural Mineral</span>
                </div>
             </motion.div>
 
