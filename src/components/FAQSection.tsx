@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 const faqs = [
   {
     question: "What is Dr. Deodorant made of?",
-    answer: "Dr. Deodorant is crafted from 100% pure potassium alum crystal, a naturally occurring mineral salt. It contains no synthetic fragrances, aluminum chlorohydrate, parabens, or artificial additives.",
+    answer: "Dr. Deodorant is formulated with potassium aluminum sulfate (alum), water, and natural fruit extracts including acerola and kiwi, enriched with vitamins C and E. It is completely unscented and contains no artificial fragrances, masking agents, parabens, or harsh additives, offering gentle, effective odour protection with skin-loving benefits.",
   },
   {
     question: "How is it different from regular deodorants?",
@@ -26,11 +26,11 @@ const faqs = [
   },
   {
     question: "What flavors are available?",
-    answer: "We offer our signature Sandalwood & Bergamot, Pure Unscented, Fresh Citrus, and Lavender Calm. All scents are derived from natural essential oils.",
+    answer: "Currently, Dr. Deodorant is available in its Original (Unscented) variant. We’re excited to share that new naturally inspired variants are coming soon, including Aloe Vera, Turmeric, Mango, Coconut, and Mangosteen.",
   },
   {
     question: "What is the shelf life of Dr. Deodorant?",
-    answer: "Our crystal deodorant has an indefinite shelf life when stored properly. A single 50ml crystal typically lasts 6-12 months with daily use—that's 3-6x longer than conventional deodorants.",
+    answer: "Dr. Deodorant has a shelf life of 3 years from the date of manufacturing when stored properly. With daily use, a single crystal typically lasts 3 to 6+ months, depending on usage conditions—making it 3–6× longer lasting than natural deodorants.",
   },
   {
     question: "Is it cruelty-free?",

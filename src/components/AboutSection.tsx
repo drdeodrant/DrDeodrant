@@ -39,18 +39,18 @@ const AboutSection = () => {
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-8 leading-[0.95]">
               2000 Years<br />of Natural<br />Protection
             </h3>
-            <p className="text-lg text-foreground leading-relaxed mb-8">
-              Potassium alum has been nature's deodorant for millennia. 
-              This crystalline mineral creates an invisible barrier that 
+            <p className="text-lg text-foreground leading-relaxed mb-8 font-bold">
+              Potassium alum has been nature’s deodorant for centuries.
+              This purified, skin-grade mineral forms an invisible barrier that
               neutralizes odor-causing bacteria—without blocking pores.
             </p>
             
             {/* Feature blocks */}
             <div className="space-y-4">
               {[
-                { label: "No Yellow Stains", desc: "Pure formula, pristine clothes" },
+                { label: "Vitamin C & E Enriched", desc: "Evens Tone, Heals & Smoothens" },
                 { label: "Hypoallergenic", desc: "Safe for sensitive skin" },
-                { label: "Single Ingredient", desc: "Just crystallized mineral salt" }
+                { label: "No Stains", desc: "Pure formula, pristine clothes" },
               ].map((item, i) => (
                 <motion.div
                   key={item.label}
@@ -94,8 +94,8 @@ const AboutSection = () => {
               transition={{ duration: 0.6, delay: 0.8 }}
               className="absolute -bottom-8 -left-8 bg-foreground text-background px-8 py-6 rounded-3xl z-20"
             >
-              <p className="text-4xl font-black">6+</p>
-              <p className="text-sm font-medium">months of use</p>
+              <p className="text-4xl font-black">24 Hr</p>
+              <p className="text-sm font-medium">Odour Protection</p>
             </motion.div>
           </motion.div>
         </div>

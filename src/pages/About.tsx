@@ -41,13 +41,13 @@ const HookSection = () => {
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-foreground leading-[0.9] mb-8 tracking-tighter">
                 WE
                 <span className="text-primary"> HATE</span><br/>
-                STAINS.
+                STAINS & SMELL.
               </h1>
               {/* PART 1: The Hook - Uses your Electric Brand Blue (#0047FF)
                   This makes the text feel like part of the artwork, not just a paragraph.
               */}
               <p className="text-xl md:text-2xl text-zinc-750 font-black leading-tight mb-6 tracking-tight">
-                Yellow marks on your favorite shirt? Unacceptable.
+                Deodorant marks on your favorite shirt? Unacceptable.
                 <br className="hidden md:block" />
                 Chemicals seeping into your skin? Never again.
               </p>

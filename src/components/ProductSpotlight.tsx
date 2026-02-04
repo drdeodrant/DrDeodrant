@@ -137,17 +137,21 @@ const ProductSpotlight = () => {
             </h2>
             
             <div className="flex items-baseline gap-4 mb-8">
-              <span className="text-5xl font-black text-primary">₹699</span>
+              <span className="text-5xl font-black text-primary">₹799</span>
               <span className="text-lg text-background/60">70g</span>
             </div>
 
             <div className="mb-10">
-              <p className="text-sm font-bold text-background/60 mb-3 uppercase tracking-wide">
-                Mineral Profile
+              <p className="text-lg text-background leading-relaxed">
+                Completely unscented with no artificial fragrances or masking agents—just an invisible,
+non-sticky mineral shield that neutralises odour-causing bacteria at the source.
               </p>
-              <p className="text-lg text-background/80 leading-relaxed">
-                100% pure Potassium Aluminum Sulfate. <span className="font-black text-background">Completely unscented. </span> 
-                No artificial fragrances or masking agents—just an invisible, non-sticky mineral shield that neutralises bacteria at the source.
+              <p className="text-sm font-bold text-background/60 mt-3 mb-3 uppercase tracking-wide">
+                Ingredients
+              </p>
+              <p className="text-lg text-background leading-relaxed">
+                Potassium Aluminum Sulfate (Alum), Water, Acerola Extract, Kiwi Fruit Extract, Vitamin C,
+                Vitamin E
               </p>
             </div>
 
