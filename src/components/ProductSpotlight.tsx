@@ -1,16 +1,63 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag, Plus, Minus } from "lucide-react";
-import productImage from "@/assets/product-deodorant.jpg";
 import CheckoutModal from "./CheckoutModal";
+
+// Shopify Imports
+import { shopifyFetch } from "@/lib/shopify";
+import { GET_PRODUCT_BY_HANDLE } from "@/lib/queries";
+
+// Fallback image
+import productImage from "@/assets/product-deodorant.jpg";
 
 const ProductSpotlight = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
+  // State for Cart & Modal
   const [cartCount, setCartCount] = useState(0);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
+  // State for Product Data (starts null, fills up later)
+  const [product, setProduct] = useState<any>(null);
+
+  // Fetch Real Data
+  useEffect(() => {
+    async function loadProduct() {
+      try {
+        const data = await shopifyFetch(GET_PRODUCT_BY_HANDLE, { 
+          handle: 'dr-deodorant-natural-mineral-deodorant-stick-vitamin-c-e-enriched' 
+        });
+
+        // Robust unwrapping: check both data structures
+        const productData = data.product || data.data?.product;
+        if (productData) {
+          setProduct(productData);
+        }
+      } catch (error) {
+        console.error("Failed to load product, using fallback UI.", error);
+      }
+    }
+    loadProduct();
+  }, []);
+
+  // --- DATA MAPPING (The Bridge) ---
+  // If product is loaded, use it. Otherwise, use your Hardcoded Design Defaults.
+  const title = product?.title || "Natural";
+  const description = product?.description || "Completely unscented with no artificial fragrances or masking agents—just an invisible, non-sticky mineral shield that neutralises odour-causing bacteria at the source.";
+  const variant = product?.variants?.edges?.[0]?.node;
+  const rawPrice = variant?.price?.amount || "799";
+  const currency = variant?.price?.currencyCode || "INR";
+  const variantId = variant?.id || "";
+  const image = product?.featuredImage?.url || productImage;
+
+  // Price Formatter
+  const formattedPrice = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: 0
+  }).format(parseFloat(rawPrice));
 
   const handleAddToCart = () => {
     setCartCount((prev) => prev + 1);
@@ -41,7 +88,7 @@ const ProductSpotlight = () => {
         className="absolute top-20 -right-20 w-[400px] h-[600px] md:w-[500px] md:h-[700px] bg-white/5 rounded-[3rem] z-0 overflow-hidden backdrop-blur-sm"
       >
         <img 
-          src={productImage} 
+          src={image} 
           alt="Product detail"
           className="w-full h-full object-cover opacity-30"
         />
@@ -66,7 +113,6 @@ const ProductSpotlight = () => {
             className="relative flex justify-center items-center py-10"
           >
             {/* LAYER 0: THE BIG BLUE BLOCK (The Atmosphere) */}
-            {/* This mimics your previous design but makes it a massive, intentional backdrop */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] z-0 pointer-events-none">
                <div className="w-full h-full bg-[#0047FF] rounded-[4rem] transform rotate-6 opacity-20 blur-3xl" /> {/* Glow */}
                <div className="absolute inset-4 bg-[#0047FF] rounded-[3rem] transform -rotate-3 border-4 border-black/10" /> {/* Solid Block */}
@@ -76,11 +122,9 @@ const ProductSpotlight = () => {
             <div className="relative w-full max-w-md aspect-[4/5] group cursor-pointer z-10">
               
               {/* LAYER 1: The Base (Pitch Black) */}
-              {/* Anchors the stack */}
               <div className="absolute inset-0 bg-black rounded-[2.5rem] transform -rotate-6 translate-y-6 translate-x-[-12px] border-4 border-black transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:translate-x-[-16px]" />
 
               {/* LAYER 2: The Separator (Clean White) */}
-              {/* CHANGED TO WHITE to pop against the Blue Background */}
               <div className="absolute inset-0 bg-white rounded-[2.5rem] transform -rotate-3 translate-y-3 translate-x-[-6px] border-4 border-black transition-transform duration-500 group-hover:rotate-[-4deg] group-hover:translate-x-[-8px]" />
 
               {/* LAYER 3: The Content (Video) */}
@@ -132,19 +176,17 @@ const ProductSpotlight = () => {
             </p>
             
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-[0.95]">
-              {/* Sandalwood<br />& Bergamot */}
-              Natural
+              {title}
             </h2>
             
             <div className="flex items-baseline gap-4 mb-8">
-              <span className="text-5xl font-black text-primary">₹799</span>
+              <span className="text-5xl font-black text-primary">{formattedPrice}</span>
               <span className="text-lg text-background/60">70g</span>
             </div>
 
             <div className="mb-10">
-              <p className="text-lg text-background leading-relaxed">
-                Completely unscented with no artificial fragrances or masking agents—just an invisible,
-non-sticky mineral shield that neutralises odour-causing bacteria at the source.
+              <p className="text-lg text-background leading-relaxed line-clamp-6">
+                {description}
               </p>
               <p className="text-sm font-bold text-background/60 mt-3 mb-3 uppercase tracking-wide">
                 Ingredients
@@ -169,7 +211,6 @@ non-sticky mineral shield that neutralises odour-causing bacteria at the source.
 
             {/* Buttons */}
             <div className="flex flex-wrap items-center gap-4">
-              {/* Logic: If cart is empty, show Big Add Button. If items exist, show Counter AND Buy Now */}
               {cartCount === 0 ? (
                 <Button 
                   onClick={handleAddToCart}
@@ -220,8 +261,9 @@ non-sticky mineral shield that neutralises odour-causing bacteria at the source.
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
         quantity={cartCount > 0 ? cartCount : 1}
-        productName="Sandalwood & Bergamot"
-        price={28}
+        productName={title}
+        price={parseFloat(rawPrice)}
+        variantId={variantId}
       />
     </section>
   );

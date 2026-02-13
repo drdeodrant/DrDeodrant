@@ -81,7 +81,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex items-center gap-2 mb-6 mt-20"
+            className="flex items-center gap-2 mb-0 mt-24"
           >
             <span className="flex h-2 w-2 rounded-full bg-[#0047FF] animate-pulse" />
             <h2 className="text-sm md:text-base font-bold tracking-[0.3em] uppercase">
